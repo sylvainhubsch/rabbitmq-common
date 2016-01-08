@@ -39,7 +39,20 @@
 -record(user_vhost, {username, virtual_host}).
 -record(user_permission, {user_vhost, permission}).
 
--record(vhost, {virtual_host, dummy}).
+%% Represents a vhost.
+%%
+%% Historically this record had 2 arguments although the 2nd
+%% was never used (`dummy`, always undefined). This is because
+%% single field records were/are illegal in OTP.
+%%
+%% As of 3.6.x, the second argument is vhost limits,
+%% which is actually used and has the same default,
+%% and therefore doesn't need a migration.
+-record(vhost, {
+          %% vhost name as a binary
+          virtual_host,
+          %% proplist of limits configured, if any
+          limits}).
 
 -record(content,
         {class_id,
