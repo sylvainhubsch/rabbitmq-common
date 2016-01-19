@@ -114,7 +114,7 @@
           port,
           %% client port
           peer_port,
-          %% protocol framing implementation module,
+          %% protocol implementation module,
           %% e.g. rabbit_framing_amqp_0_9_1
           protocol,
           user,

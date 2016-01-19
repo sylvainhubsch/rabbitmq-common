@@ -146,6 +146,7 @@
           vhost,
           name,
           pid,
+          protocol,
           %% client host
           peer_host,
           %% client port
