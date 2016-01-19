@@ -46,8 +46,8 @@
 %% single field records were/are illegal in OTP.
 %%
 %% As of 3.6.x, the second argument is vhost limits,
-%% which is actually used and has the same default,
-%% and therefore doesn't need a migration.
+%% which is actually used and has the same default.
+%% Nonetheless, this required a migration, see rabbit_upgrade_functions.
 -record(vhost, {
           %% vhost name as a binary
           virtual_host,
@@ -139,6 +139,20 @@
                  type,          %% 'ez' or 'dir'
                  dependencies,  %% [{atom(), string()}]
                  location}).    %% string()
+
+%% used to track connections across virtual hosts
+%% e.g. so that limits can be enforced
+-record(tracked_connection, {
+          vhost,
+          name,
+          pid,
+          %% client host
+          peer_host,
+          %% client port
+          peer_port,
+          %% time of connection
+          connected_at
+         }).
 
 %%----------------------------------------------------------------------------
 
