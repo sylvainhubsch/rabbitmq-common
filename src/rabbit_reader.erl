@@ -399,7 +399,8 @@ start_connection(Parent, HelperSup, Deb, Sock) ->
         %% socket w/o delay before termination.
         rabbit_net:fast_close(Sock),
         rabbit_networking:unregister_connection(self()),
-        rabbit_event:notify(connection_closed, [{pid, self()}])
+        rabbit_event:notify(connection_closed, [{name, list_to_binary(Name)},
+                                                {pid, self()}])
     end,
     done.
 
