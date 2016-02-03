@@ -143,6 +143,9 @@
 %% used to track connections across virtual hosts
 %% e.g. so that limits can be enforced
 -record(tracked_connection, {
+          %% {Node, Name}
+          id,
+          node,
           vhost,
           name,
           pid,
@@ -151,6 +154,7 @@
           peer_host,
           %% client port
           peer_port,
+          username,
           %% time of connection
           connected_at
          }).

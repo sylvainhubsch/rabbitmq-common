@@ -160,7 +160,8 @@
         peer_host, ssl, peer_cert_subject, peer_cert_issuer,
         peer_cert_validity, auth_mechanism, ssl_protocol,
         ssl_key_exchange, ssl_cipher, ssl_hash, protocol, user, vhost,
-        timeout, frame_max, channel_max, client_properties, connected_at]).
+        timeout, frame_max, channel_max, client_properties, connected_at,
+        node]).
 
 -define(INFO_KEYS, ?CREATION_EVENT_KEYS ++ ?STATISTICS_KEYS -- [pid]).
 
@@ -400,7 +401,8 @@ start_connection(Parent, HelperSup, Deb, Sock) ->
         rabbit_net:fast_close(Sock),
         rabbit_networking:unregister_connection(self()),
         rabbit_event:notify(connection_closed, [{name, list_to_binary(Name)},
-                                                {pid, self()}])
+                                                {pid, self()},
+                                                {node, node()}])
     end,
     done.
 
@@ -1375,6 +1377,7 @@ notify_auth_result(Username, AuthResult, ExtraProps, State) ->
 infos(Items, State) -> [{Item, i(Item, State)} || Item <- Items].
 
 i(pid,                #v1{}) -> self();
+i(node,               #v1{}) -> node();
 i(SockStat,           S) when SockStat =:= recv_oct;
                               SockStat =:= recv_cnt;
                               SockStat =:= send_oct;
