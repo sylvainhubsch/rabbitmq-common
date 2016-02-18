@@ -1202,6 +1202,13 @@ handle_method0(#'connection.open'{virtual_host = VHostPath},
                            helper_sup       = SupPid,
                            sock             = Sock,
                            throttle         = Throttle}) ->
+    case rabbit_connection_tracking:is_over_connection_limit(VHostPath) of
+        false         -> ok;
+        {true, Limit} -> rabbit_misc:protocol_error(not_allowed,
+                            "access to vhost '~s' refused for user '~s': "
+                            "connection limit (~p) is reached",
+                            [VHostPath, User#user.username, Limit])
+    end,
     ok = rabbit_access_control:check_vhost_access(User, VHostPath, Sock),
     NewConnection = Connection#connection{vhost = VHostPath},
     ok = send_on_channel0(Sock, #'connection.open_ok'{}, Protocol),

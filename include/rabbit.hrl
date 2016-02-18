@@ -141,7 +141,12 @@
                  location}).    %% string()
 
 %% used to track connections across virtual hosts
-%% e.g. so that limits can be enforced
+%% so that limits can be enforced
+-record(tracked_connection_per_vhost,
+    {vhost, connection_count}).
+
+%% Used to track detailed information
+%% about connections.
 -record(tracked_connection, {
           %% {Node, Name}
           id,
