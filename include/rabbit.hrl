@@ -163,7 +163,7 @@
 -record(trie_binding, {exchange_name, node_id, destination, arguments}).
 
 -record(headers_bindings_keys, {exchange, binding_id}).
--record(headers_bindings, {exch_bind, destination, binding_type, last_nxkey, stop_on_match, gotos, dontroute, cargs}).
+-record(headers_bindings, {exch_bind, destinations, binding_type, optims, stop_on_match, gotos, options, cargs}).
 
 -record(listener, {node, protocol, host, ip_address, port, opts = []}).
 
