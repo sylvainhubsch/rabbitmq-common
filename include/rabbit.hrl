@@ -162,6 +162,9 @@
 -record(trie_edge, {exchange_name, node_id, word}).
 -record(trie_binding, {exchange_name, node_id, destination, arguments}).
 
+-record(headers_bindings_keys, {exchange, binding_id}).
+-record(headers_bindings, {exch_bind, binding_type, destinations, compiled_args, other_operators}).
+
 -record(listener, {node, protocol, host, ip_address, port, opts = []}).
 
 -record(runtime_parameters, {key, value}).
